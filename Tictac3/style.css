@@ -1,0 +1,50 @@
+root{
+    --purple:#3e0249;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: sans-serif;
+    background-color:var(--purple) ;
+}
+h1{
+    font-size: 54px;
+    text-transform: uppercase;
+}
+.container{
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+#gameboard{
+  width:450px;
+  margin-top:20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.box{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--purple);
+    font-size: 40px;
+}
+button{
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    background-color:#aea3b0;
+    transition:cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+button:hover{
+    color:#fff;
+    scale: 1.02;
+    background-color: #000;
+}

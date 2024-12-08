@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="weat.css">
+    <title>weather Conditions</title>
+</head>
+<body>
+    <div class="card">
+      <div class="search">
+        <input type="text" placeholder="Enter the city" spellcheck="false">
+        <button><img src="https://img.icons8.com/?size=100&id=132&format=png"></button>
+      </div>
+      <div class="error">
+        <p>invalid city name</p>
+      </div>
+      <div class="weather">
+        <img src="https://img.icons8.com/?size=128&id=txoP0q0H3NEb&format=png" class="weather-icon">
+        <h1 class="temp" id="temp">22°C</h1>
+        <h2 class="city" id="city">New York</h2>
+   
+       <div class="details">
+        <div class="cols">
+            <img src="https://cdn-icons-png.freepik.com/256/15201/15201388.png?uid=R173014793&ga=GA1.1.285316574.1731152689&semt=ais_hybrid" >
+            <div>
+            <p class="humidity" id="humidity">50%</p>
+            <p>Humidity</p>
+          </div>
+        </div>
+        <div class="cols">
+            <img src="https://cdn-icons-png.freepik.com/256/1230/1230842.png?uid=R173014793&ga=GA1.1.285316574.1731152689&semt=ais_hybrid">
+            <div>
+            <p class="wind" id="wind">15 Km/h</p>
+            <p>Wind speed</p>
+         </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script>
+        const apiKey = "727bce852aec17670c57f6f18c1de46f";
+       const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+      const searchBox = document.querySelector(".search input");
+      const searchBtn = document.querySelector(".search button");
+      const weatherIcon = document.querySelector(".weather-icon");
+
+   async function checkWeather(city) {
+    try {
+        const response = await fetch(`${apiUrl}${city}&appid=${apiKey}`);
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+        const data = await response.json();
+
+        document.querySelector("#city").textContent = data.name;
+        document.querySelector("#temp").textContent = Math.round(data.main.temp) + "°C";
+        document.querySelector("#humidity").textContent = data.main.humidity + "%";
+        document.querySelector("#wind").textContent = data.wind.speed + " km/h";
+
+        switch (data.weather[0].main.toLowerCase()) {
+            case "clouds":
+                weatherIcon.src = "https://cdn-icons-png.freepik.com/256/14670/14670208.png";
+                break;
+            case "clear":
+                weatherIcon.src = "https://t3.ftcdn.net/jpg/05/62/44/94/240_F_562449409_rVvjM7xDQ7uwCnIDKvIQmQwKDepr1nlG.jpg";
+                break;
+            default:
+                weatherIcon.src = "https://img.icons8.com/?size=128&id=txoP0q0H3NEb&format=png"; // Default icon
+        }
+
+        document.querySelector(".weather").style.display = "block";
+        document.querySelector(".error").style.display = "none";
+    } catch (error) {
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+    }
+}
+
+searchBtn.addEventListener("click", () => {
+    checkWeather(searchBox.value.trim());
+});
+
+searchBox.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        checkWeather(searchBox.value.trim());
+    }
+});
+    </script>
+</body>
+</html>
